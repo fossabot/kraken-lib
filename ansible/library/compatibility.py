@@ -56,9 +56,12 @@ except ImportError as e:
 REGISTERED_CHECKS = []
 
 # All checks decorated by @register_check will be run by check_compatibility().
+
+
 def register_check(check):
     REGISTERED_CHECKS.append(check)
     return check
+
 
 def get_version(version):
     '''Return the VersionInfo for the version string, but strip the leading
@@ -68,6 +71,7 @@ def get_version(version):
         version = version[1:]
     version_info = parse_version_info(version)
     return version_info
+
 
 def get_versioned_fabric(fabric_config, version):
     '''If the kind of fabricConfig is `versionedFabric`, return the config
@@ -82,6 +86,7 @@ def get_versioned_fabric(fabric_config, version):
             return fabric_config['kubeVersion']['default']
     else:
         return fabric_config
+
 
 @register_check
 def check_nodepool_types(config):
@@ -99,13 +104,14 @@ def check_nodepool_types(config):
         nodepools = cluster['nodePools']
         for nodepool in nodepools:
             if (('etcdConfigs' in nodepool and 'apiServerConfig' in nodepool)
-                or ('etcdConfigs' not in nodepool and 'kubeConfig' not in nodepool)):
+                    or ('etcdConfigs' not in nodepool and 'kubeConfig' not in nodepool)):
                 incompatible = True
                 explaination = template.format(cluster=cluster['name'],
                                                nodepool=nodepool['name'])
                 explanations.append(explaination)
 
     return incompatible, explanations
+
 
 @register_check
 def check_k8s_calico_mismatch(config):
@@ -139,13 +145,14 @@ def check_k8s_calico_mismatch(config):
 
             k8s_version = get_version(nodepool['kubeConfig']['version'])
             if ((k8s_version.major, k8s_version.minor) !=
-                (required_k8s_version.major, required_k8s_version.minor)):
+                    (required_k8s_version.major, required_k8s_version.minor)):
                 continue
 
             fabric_config = get_versioned_fabric(cluster['fabricConfig'],
                                                  k8s_version)
             containers = fabric_config['options']['containers']
-            calico_node_version = get_version(containers['calicoNode']['version'])
+            calico_node_version = get_version(
+                containers['calicoNode']['version'])
             if calico_node_version != required_calico_node_version:
                 incompatible = True
                 explaination = template.format(cluster=cluster['name'],
@@ -154,12 +161,13 @@ def check_k8s_calico_mismatch(config):
 
     return incompatible, explanations
 
+
 def check_compatibility(config):
     '''Calls each check function with a config and collects any
     incompatibilities returned.
     '''
-    result = { 'incompatible': False,
-               'explanations': [] }
+    result = {'incompatible': False,
+              'explanations': []}
 
     for check in REGISTERED_CHECKS:
         incompatible, explanations = check(config)
@@ -168,6 +176,7 @@ def check_compatibility(config):
             result['explanations'] = result['explanations'] + explanations
 
     return result
+
 
 def load_documents(config=None, config_filename=None, **kwargs):
     '''Accepts a config as either a python object or a file containing
@@ -179,17 +188,18 @@ def load_documents(config=None, config_filename=None, **kwargs):
 
     return config
 
+
 def main():
     module = AnsibleModule(
         argument_spec={
-            'config': { 'required': False, 'type': 'dict' },
-            'config_filename': { 'required': False, 'type': 'str' },
+            'config': {'required': False, 'type': 'dict'},
+            'config_filename': {'required': False, 'type': 'str'},
         },
         mutually_exclusive=[
-            [ 'config', 'config_filename' ],
+            ['config', 'config_filename'],
         ],
         required_one_of=[
-            [ 'config', 'config_filename' ],
+            ['config', 'config_filename'],
         ],
         supports_check_mode=True
     )
@@ -202,6 +212,7 @@ def main():
     else:
         msg = "The kraken config appears to be compatible."
     module.exit_json(changed=False, msg=msg, **result)
+
 
 if __name__ == '__main__':
     main()
