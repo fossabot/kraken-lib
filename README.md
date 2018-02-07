@@ -2,6 +2,7 @@
 
 [![Docker Repository on Quay](https://quay.io/repository/samsung_cnct/k2/status "Docker Repository on Quay")](https://quay.io/repository/samsung_cnct/k2)
 [![pipeline status](https://git.cnct.io/common-tools/samsung-cnct_kraken-lib/badges/master/pipeline.svg)](https://git.cnct.io/common-tools/samsung-cnct_kraken-lib/commits/master)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fserfdom%2Fkraken-lib.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fserfdom%2Fkraken-lib?ref=badge_shield)
 <a href="https://github.com/cncf/k8s-conformance/tree/master/v1.8/kraken"><img src="https://raw.githubusercontent.com/cncf/artwork/master/kubernetes/certified-kubernetes/1.8/color/certified_kubernetes_1.8_color.png" width="80" align="right"></a>
 <a href="https://github.com/cncf/k8s-conformance/tree/master/v1.7/kraken"><img src="https://raw.githubusercontent.com/cncf/artwork/master/kubernetes/certified-kubernetes/1.7/color/certified_kubernetes_1.7_color.png" width="80" align="right"></a>
 
@@ -571,3 +572,7 @@ You can find further information here:
 
 # Maintainer
 This document is maintained by Patrick Christopher (@coffeepac) at Samsung SDS.
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fserfdom%2Fkraken-lib.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fserfdom%2Fkraken-lib?ref=badge_large)
